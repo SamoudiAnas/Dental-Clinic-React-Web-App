@@ -5,7 +5,7 @@ import { useSidebarContext } from "../../Contexts/SidebarContext";
 function NavElement({ data }) {
   const { sidebarState } = useSidebarContext();
   return (
-    <Wrapper isSidebarOpen={sidebarState.isSidebarOpen} href="/">
+    <Wrapper isSidebarOpen={sidebarState.isSidebarOpen} href={data.path}>
       {data.icon}
       <h4 className="nav-name">{data.name}</h4>
     </Wrapper>
