@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Sidebar from "./Components/Sidebar/Sidebar";
-import Calendar from "./Pages/Calendar";
+import Overview from "./Pages/Overview";
+import CalendarPage from "./Pages/CalendarPage";
 import PatientList from "./Pages/PatientList";
 
 function App() {
@@ -13,9 +14,13 @@ function App() {
 
         <div className="page-wrapper">
           <Switch>
-            <Route exact path="/calendar">
-              <Calendar />
+            <Route exact path="/">
+              <Overview />
             </Route>
+            <Route exact path="/calendar">
+              <CalendarPage />
+            </Route>
+
             <Route exact path="/patient-list">
               <PatientList />
             </Route>

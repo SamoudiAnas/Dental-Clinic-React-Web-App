@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import PatientListRequest from "../Components/PatientListRequest";
+import PatientListRequest from "../Components/PatientComponents/PatientListRequest";
 
 function PatientList() {
   // eslint-disable-next-line
@@ -8,7 +8,7 @@ function PatientList() {
 
   return (
     <Wrapper>
-      <h1>Patient list</h1>
+      <h3>General Info</h3>
       <div className="general-info">
         <div className="info-tap">
           <h1 className="info-count">5</h1>
@@ -19,12 +19,12 @@ function PatientList() {
           <p className="info-title">Today's clients</p>{" "}
         </div>
         <div className="info-tap">
-          <h1 className="info-count">7</h1>
+          <h1 className="info-count">17</h1>
           <p className="info-title">Total Patients</p>{" "}
         </div>
       </div>
       <div className="flex justify-between">
-        <h5>Patients</h5>
+        <h3>Patient List</h3>
         <div className="selector">
           <select
             name="cars"
@@ -61,7 +61,7 @@ export default PatientList;
 export const Wrapper = styled.div`
   padding: 2rem;
 
-  h1 {
+  h3 {
     color: ${(props) => props.theme.secondary};
   }
 
@@ -98,6 +98,10 @@ export const Wrapper = styled.div`
 
   .flex {
     display: flex;
+
+    h3 {
+      margin-bottom: 1rem;
+    }
   }
 
   .justify-between {

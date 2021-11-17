@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import image from "../Images/image.jpeg";
+import image from "../../Images/image.jpeg";
 
 function PatientListRequest() {
   return (
@@ -18,7 +18,7 @@ function PatientListRequest() {
 export default PatientListRequest;
 
 export const Wrapper = styled.div`
-  padding: 1rem 2rem 1.5rem;
+  padding: 1.5rem 2rem 1.5rem;
   display: grid;
   grid-template-columns: 1fr 3fr 2fr 3fr 3fr 3fr;
   align-items: center;
