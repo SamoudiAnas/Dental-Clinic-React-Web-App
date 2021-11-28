@@ -5,25 +5,41 @@ import CalendarComponent from "../Components/Calendar/CalendarComponent";
 import Loading from "../Components/Loading/Loading";
 import { useAddEventContext } from "../Contexts/AddEventContext";
 import { useDataContext } from "../Contexts/PreviewDataContext";
+import Layout from "../Components/Layout/Layout";
 
 function CalendarPage() {
   const { isAddEventOpen, setIsAddEventOpen } = useAddEventContext();
   const { database } = useDataContext();
+
+  const refreshPage = () => {
+    window.location.reload();
+  };
+
   return (
-    <Wrapper>
-      <div className="flex">
-        <h3>Calendar</h3>
-        <button className="add-client" onClick={() => setIsAddEventOpen(true)}>
-          Add Event
-        </button>
-      </div>
-      <hr />
-      <div className="calendar-wrapper">
-        <CalendarComponent />
-      </div>
-      {database.length === 0 ? <Loading /> : null}
-      {isAddEventOpen ? <AddEventModal /> : null}
-    </Wrapper>
+    <Layout>
+      <Wrapper>
+        <div className="flex">
+          <h3>Calendar</h3>
+          <div>
+            <button className="reload-page" onClick={refreshPage}>
+              Refresh
+            </button>
+            <button
+              className="add-client"
+              onClick={() => setIsAddEventOpen(true)}
+            >
+              Add Event
+            </button>
+          </div>
+        </div>
+        <hr />
+        <div className="calendar-wrapper">
+          <CalendarComponent />
+        </div>
+        {database.length === 0 ? <Loading /> : null}
+        {isAddEventOpen ? <AddEventModal /> : null}
+      </Wrapper>
+    </Layout>
   );
 }
 
@@ -32,11 +48,6 @@ export default CalendarPage;
 export const Wrapper = styled.div`
   padding: 2rem;
   color: black;
-  .calendar-wrapper {
-    /* display: grid;
-    grid-template-columns: 3fr 1fr;
-    gap: 2rem; */
-  }
 
   .week-days {
     display: grid;
@@ -73,7 +84,22 @@ export const Wrapper = styled.div`
     padding: 0.5rem 1rem;
     color: white;
     cursor: pointer;
+
+    &:hover {
+      background-color: ${(props) => props.theme.primaryHover};
+    }
+  }
+
+  .reload-page {
+    margin-right: 1rem;
+    border: transparent;
+    background-color: ${(props) => props.theme.secondary};
+    padding: 0.5rem 1rem;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+      background-color: ${(props) => props.theme.secondaryHover};
+    }
   }
 `;
-
-export const CalendarDiv = styled.div``;

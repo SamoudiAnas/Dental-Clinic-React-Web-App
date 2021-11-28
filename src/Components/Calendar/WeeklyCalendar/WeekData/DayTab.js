@@ -1,17 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import texture from "../../../../Images/texture.svg";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { generateColor } from "../../../../Utils/BuildAppointments";
+import { DragAppointementHandler } from "../WeeklyCalendarBuild";
 
 function DayTab({ dayData }) {
   const getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
     userSelect: "none",
     padding: grid * 2,
+    marginLeft: ".25rem",
+    marginRight: ".25rem",
     margin: "0",
     height: "5rem",
-    borderBottom: "1px solid #ddd",
-    borderRight: "1px solid #ddd",
+    borderLeft: isDragging ? "" : `3px solid ${generateColor()}`,
+    boxShadow: "0 5px 5px 5px rgba(0,0,0,0.1)",
     //change text color if dragging
     color: isDragging ? "#fff" : "black",
 
@@ -25,15 +28,38 @@ function DayTab({ dayData }) {
     ...draggableStyle,
   });
 
+  const getItemStyleForEmpty = (isDragging, draggableStyle) => ({
+    // some basic styles to make the items look a bit nicer
+    userSelect: "none",
+    padding: grid * 2,
+    margin: "0",
+    height: "5rem",
+    borderBottom: "1px solid #ddd",
+    borderRight: "1px solid #ddd",
+    //change text color if dragging
+    color: isDragging ? "#fff" : "black",
+
+    // change background colour if dragging
+    background: isDragging ? "#F72C25" : "#F8F8F8",
+
+    //rotate if dragging
+    transform: isDragging ? "rotate(5deg)" : "none",
+
+    // styles we need to apply on draggables
+    ...draggableStyle,
+  });
+
   const getListStyle = (isDraggingOver) => ({
-    background: `url(${texture})`,
+    backgroundColor: "#ddd",
   });
 
   const grid = 8;
 
   return (
     <Wrapper>
-      <DragDropContext onDragEnd={(res) => console.log(res)}>
+      <DragDropContext
+        onDragEnd={(res) => DragAppointementHandler(dayData, res)}
+      >
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
             <div
@@ -48,10 +74,17 @@ function DayTab({ dayData }) {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      style={getItemStyle(
-                        snapshot.isDragging,
-                        provided.draggableProps.style
-                      )}
+                      style={
+                        item.id.substring(0, 5) === "empty"
+                          ? getItemStyleForEmpty(
+                              snapshot.isDragging,
+                              provided.draggableProps.style
+                            )
+                          : getItemStyle(
+                              snapshot.isDragging,
+                              provided.draggableProps.style
+                            )
+                      }
                     >
                       {item.clientName}
                     </div>

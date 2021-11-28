@@ -23,10 +23,10 @@ export function replaceEmptyAppointments(data) {
 
 const generateEmptyData = (index) => {
   return {
-    id: v4(),
+    id: "empty " + v4(),
     clientName: "",
     Date: "",
-    hour: "",
+    hour: hoursOfWork[index],
     index: index,
   };
 };
@@ -45,4 +45,17 @@ export const sortDataByHour = (data) => {
     }
     console.log(tempData);
   }
+};
+
+export const generateColor = () => {
+  const Colors = [
+    "#F72C25",
+    "#1C0B19",
+    "#F9DC5C",
+    "#17887b",
+    "#0353A4",
+    "#28702c",
+  ];
+
+  return Colors[Math.floor(Math.random() * 6)];
 };

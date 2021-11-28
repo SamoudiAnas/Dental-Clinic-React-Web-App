@@ -1,40 +1,41 @@
 import React from "react";
-import styled from "styled-components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Sidebar from "./Components/Sidebar/Sidebar";
+
+//pages
 import Overview from "./Pages/Overview";
 import CalendarPage from "./Pages/CalendarPage";
 import PatientList from "./Pages/PatientList";
+import Auth from "./Pages/Auth";
+
+//routes
+import PrivateRoute from "./Components/Route/PrivateRoute";
+import Settings from "./Pages/Settings";
 
 function App() {
   return (
     <Router>
-      <Wrapper>
-        <Sidebar />
+      <Switch>
+        <PrivateRoute exact path="/">
+          <Overview />
+        </PrivateRoute>
 
-        <div className="page-wrapper">
-          <Switch>
-            <Route exact path="/">
-              <Overview />
-            </Route>
-            <Route exact path="/calendar">
-              <CalendarPage />
-            </Route>
+        <PrivateRoute exact path="/calendar">
+          <CalendarPage />
+        </PrivateRoute>
 
-            <Route exact path="/patient-list">
-              <PatientList />
-            </Route>
-          </Switch>
-        </div>
-      </Wrapper>
+        <PrivateRoute exact path="/patient-list">
+          <PatientList />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/settings">
+          <Settings />
+        </PrivateRoute>
+
+        <Route exact path="/login">
+          <Auth />
+        </Route>
+      </Switch>
     </Router>
   );
 }
-export const Wrapper = styled.div`
-  display: flex;
-
-  .page-wrapper {
-    width: 100%;
-  }
-`;
 export default App;

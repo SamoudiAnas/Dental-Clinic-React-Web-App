@@ -1,58 +1,46 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import PatientListRequest from "../Components/PatientComponents/PatientListRequest";
+import Layout from "../Components/Layout/Layout";
 
 function PatientList() {
   // eslint-disable-next-line
   const [viewMode, setViewMode] = useState("all");
 
   return (
-    <Wrapper>
-      <h3>General Info</h3>
-      <div className="general-info">
-        <div className="info-tap">
-          <h1 className="info-count">5</h1>
-          <p className="info-title">Awaiting for approval</p>{" "}
+    <Layout>
+      <Wrapper>
+        <div className="flex justify-between">
+          <h3>Patient List</h3>
+          <div className="selector">
+            <select
+              name="cars"
+              id="cars"
+              onChange={(e) => setViewMode(e.target.value)}
+            >
+              <option value="all">All</option>
+              <option value="non approved">Non Approved</option>
+              <option value="approved">Approved</option>
+            </select>
+          </div>
         </div>
-        <div className="info-tap">
-          <h1 className="info-count">12</h1>
-          <p className="info-title">Today's clients</p>{" "}
+        <div className="data-list">
+          <PatientListRequest />
+          <PatientListRequest />
+          <PatientListRequest />
+          <PatientListRequest />
+          <PatientListRequest />
+          <PatientListRequest />
         </div>
-        <div className="info-tap">
-          <h1 className="info-count">17</h1>
-          <p className="info-title">Total Patients</p>{" "}
+        <div className="data-controller flex justify-between">
+          <div className="data-info">1 out of 5 pages</div>
+          <div className="data-controllers">
+            <span className="controller">&lt; Prev </span>
+            <span className="controller">Next &gt;</span>
+          </div>
         </div>
-      </div>
-      <div className="flex justify-between">
-        <h3>Patient List</h3>
-        <div className="selector">
-          <select
-            name="cars"
-            id="cars"
-            onChange={(e) => setViewMode(e.target.value)}
-          >
-            <option value="all">All</option>
-            <option value="non approved">Non Approved</option>
-            <option value="approved">Approved</option>
-          </select>
-        </div>
-      </div>
-      <div className="data-list">
-        <PatientListRequest />
-        <PatientListRequest />
-        <PatientListRequest />
-        <PatientListRequest />
-        <PatientListRequest />
-        <PatientListRequest />
-      </div>
-      <div className="data-controller flex justify-between">
-        <div className="data-info">1 out of 5 pages</div>
-        <div className="data-controllers">
-          <span className="controller">&lt; Prev </span>
-          <span className="controller">Next &gt;</span>
-        </div>
-      </div>
-    </Wrapper>
+      </Wrapper>
+    </Layout>
   );
 }
 
@@ -60,6 +48,10 @@ export default PatientList;
 
 export const Wrapper = styled.div`
   padding: 2rem;
+  display: grid;
+  grid-template-rows: 1fr 16fr 1fr;
+  max-height: 100vh;
+  height: 100vh;
 
   h3 {
     color: ${(props) => props.theme.secondary};
@@ -123,5 +115,9 @@ export const Wrapper = styled.div`
       cursor: pointer;
       text-decoration: underline;
     }
+  }
+
+  .data-list {
+    overflow-y: scroll;
   }
 `;

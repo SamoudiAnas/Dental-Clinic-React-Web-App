@@ -6,7 +6,7 @@ function CalendarViewMode() {
   const { calendarViewMode, setCalendarViewMode } = useCalendarViewContext();
 
   useEffect(() => {
-    setCalendarViewMode("month");
+    setCalendarViewMode("week");
     // eslint-disable-next-line
   }, []);
 

@@ -91,7 +91,12 @@ function AddEventModal() {
     <Wrapper>
       <ClickOutHandler onClickOut={() => setIsAddEventOpen(false)}>
         <div className="container">
-          <h3 className="title">Add New Appointment</h3>
+          <div className="flex">
+            <h3 className="title">Add New Appointment</h3>
+            <div className="close" onClick={() => setIsAddEventOpen(false)}>
+              <h3>x</h3>
+            </div>
+          </div>
           <form onSubmit={(e) => addEventToDatabase(e)}>
             <input
               type="text"
@@ -158,6 +163,13 @@ const Wrapper = styled.div`
     width: 100%;
     padding: 0.75rem 1rem;
     margin: 0.5rem 0;
+    border: 1px solid ${(props) => props.theme.secondary};
+  }
+
+  .flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .title {
@@ -175,6 +187,25 @@ const Wrapper = styled.div`
     background-color: ${(props) => props.theme.primary};
     padding: 0.5rem 1rem;
     color: white;
-    cursor: pointer;
+    &:hover {
+      cursor: pointer;
+      background-color: ${(props) => props.theme.secondary};
+    }
+  }
+
+  .close {
+    background-color: ${(props) => props.theme.primary};
+    padding: 0.5rem 1rem;
+    color: white;
+
+    &:hover {
+      cursor: pointer;
+      background-color: ${(props) => props.theme.secondary};
+    }
+    span {
+      font-family: "Poppins", sans-serif;
+      font-weight: 500;
+      transform: rotate(+45deg);
+    }
   }
 `;

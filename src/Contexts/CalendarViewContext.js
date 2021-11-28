@@ -3,7 +3,7 @@ import React, { useState, useContext, createContext } from "react";
 const CalendarViewContext = createContext();
 
 function CalendarViewProvider({ children }) {
-  const [calendarViewMode, setCalendarViewMode] = useState("month");
+  const [calendarViewMode, setCalendarViewMode] = useState("week");
 
   return (
     <CalendarViewContext.Provider

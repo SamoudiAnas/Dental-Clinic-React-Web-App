@@ -14,21 +14,24 @@ import CalendarViewProvider from "./Contexts/CalendarViewContext";
 import DateProvider from "./Contexts/DateContext";
 import DataProvider from "./Contexts/PreviewDataContext";
 import AddEventProvider from "./Contexts/AddEventContext";
+import LoginProvider from "./Contexts/LoginContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={Dark}>
-      <SidebarProvider>
-        <CalendarViewProvider>
-          <DateProvider>
-            <DataProvider>
-              <AddEventProvider>
-                <App />
-              </AddEventProvider>
-            </DataProvider>
-          </DateProvider>
-        </CalendarViewProvider>
-      </SidebarProvider>
+      <LoginProvider>
+        <SidebarProvider>
+          <CalendarViewProvider>
+            <DateProvider>
+              <DataProvider>
+                <AddEventProvider>
+                  <App />
+                </AddEventProvider>
+              </DataProvider>
+            </DateProvider>
+          </CalendarViewProvider>
+        </SidebarProvider>
+      </LoginProvider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")

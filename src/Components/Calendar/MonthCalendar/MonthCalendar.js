@@ -1,20 +1,31 @@
 import React, { useState, useEffect } from "react";
 
+//styling
 import styled from "styled-components";
 import dayStyles from "./dayStyles";
 import texture from "../../../Images/texture.svg";
-import { useDateContext } from "../../../Contexts/DateContext";
+
+//utils
 import { day_names } from "../../../Utils/DateVariables";
 import buildCalendar from "./build";
 
+//contexts
+import { useDateContext } from "../../../Contexts/DateContext";
+import { useCalendarViewContext } from "../../../Contexts/CalendarViewContext";
+
 function MonthCalendar({ setSelectedDate }) {
   const [calendar, setCalendar] = useState([]);
-
-  const { date } = useDateContext();
+  const { setCalendarViewMode } = useCalendarViewContext();
+  const { date, setDate } = useDateContext();
 
   useEffect(() => {
     setCalendar(buildCalendar(date));
   }, [date]);
+
+  const handleClick = (day) => {
+    setCalendarViewMode("day");
+    setDate(day);
+  };
 
   return (
     <Wrapper>
@@ -31,13 +42,14 @@ function MonthCalendar({ setSelectedDate }) {
             <div
               key={day}
               className={`day ${dayStyles(day, date)}`}
-              onDoubleClick={() => setSelectedDate(day)}
+              onDoubleClick={() => handleClick(day)}
             >
-              {day.format("D")}
+              {day.format("DD")}
             </div>
           ))}
         </div>
       ))}
+      <p className="note">** Note: Double click to got to selected day! **</p>
     </Wrapper>
   );
 }
@@ -86,5 +98,13 @@ export const Wrapper = styled.div`
     padding: 0.25rem 0.5rem;
     background-color: ${(props) => props.theme.primary};
     position: relative;
+  }
+
+  .note {
+    margin: 1rem 0;
+    text-align: center;
+    color: #c2c2c2;
+    font-style: italic;
+    font-size: 0.9rem;
   }
 `;

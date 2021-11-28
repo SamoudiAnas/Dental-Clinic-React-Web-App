@@ -1,35 +1,24 @@
-import React, { useState, useContext, createContext } from "react";
+import React, { useState, useContext, createContext, useReducer } from "react";
 import { useEffect } from "react";
-import { v4 } from "uuid";
-import { replaceEmptyAppointments } from "../Utils/BuildAppointments";
+
+//database
 import { ref, set, onValue } from "firebase/database";
 import { databaseRef } from "../firebase-config";
+
+//utils
 import { month_names } from "../Utils/DateVariables";
 
+//reducer
+import AppointmentReducer from "../Reducers/AppointmentReducer";
+
+//create context
 const DataContext = createContext();
 
 function DataProvider({ children }) {
-  const initialState = [
-    {
-      id: v4(),
-      clientName: "Anas Samoudi",
-      date: "2021-10-31",
-      hour: "09:00 - 10:00",
-      index: 1,
-    },
-    {
-      id: v4(),
-      clientName: "Someone",
-      date: "2021-10-31",
-      hour: "15:00 - 16:00",
-      index: 7,
-    },
-  ];
-
   //from firebase
   const [database, setDatabase] = useState([]);
 
-  const [data, setData] = useState(initialState);
+  const [data, dispatchData] = useReducer(AppointmentReducer, []);
 
   const getData = (year, month, day) => {
     //store results of the search
@@ -83,13 +72,15 @@ function DataProvider({ children }) {
         setDatabase(snapshot.val());
       }
     });
-    setData(replaceEmptyAppointments(data));
+    dispatchData({ type: "LOAD_DATA", payload: data });
 
     // eslint-disable-next-line
   }, []);
 
   return (
-    <DataContext.Provider value={{ data, setData, database, addData, getData }}>
+    <DataContext.Provider
+      value={{ data, dispatchData, database, addData, getData }}
+    >
       {children}
     </DataContext.Provider>
   );

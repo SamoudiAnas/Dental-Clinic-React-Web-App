@@ -7,7 +7,7 @@ function PatientListRequest() {
     <Wrapper>
       <img src={image} alt="avatar" />
       <h4 className="patient-name">Anas Samoudi</h4>
-      <p className="reason">Lorem Ipsum</p>
+      <p className="reason">06 12 34 56 78</p>
       <h5 className="date">1.30pm - 2.30pm</h5>
       <button className="accept">Accept</button>
       <button className="reschedule">Reschedule</button>
