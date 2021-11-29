@@ -4,5 +4,5 @@ This is a web app for dental clinic that simplifies saving and managing patients
 
 ## Calendar Overview
 
-![alt text](https://github.com/SamoudiAnas/Dental-Clinic-React-Web-App/src/Images/thumb.png)
+![alt text](https://github.com/SamoudiAnas/Dental-Clinic-React-Web-App/blob/master/src/Images/thumb.png)
 
