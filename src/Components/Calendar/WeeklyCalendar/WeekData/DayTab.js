@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { generateColor } from "../../../../Utils/BuildAppointments";
 import { DragAppointementHandler } from "../WeeklyCalendarBuild";
+import WeekDayComponent from "../WeekDayComponent";
 
 function DayTab({ dayData }) {
   const getItemStyle = (isDragging, draggableStyle) => ({
@@ -86,7 +87,11 @@ function DayTab({ dayData }) {
                             )
                       }
                     >
-                      {item.clientName}
+                      {item.id.substring(0, 5) === "empty" ? (
+                        item.clientName
+                      ) : (
+                        <WeekDayComponent item={item} />
+                      )}
                     </div>
                   )}
                 </Draggable>

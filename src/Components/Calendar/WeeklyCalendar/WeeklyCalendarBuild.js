@@ -73,11 +73,6 @@ export const DragAppointementHandler = (dayData, res) => {
     itemDestination.id.substring(0, 5) !== "empty"
   ) {
     //change the hour of the source to the hour of the destination
-    console.log(tempItem);
-
-    console.log(itemSource);
-
-    console.log(itemDestination);
 
     /**
      *

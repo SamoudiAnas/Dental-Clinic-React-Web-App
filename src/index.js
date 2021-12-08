@@ -15,6 +15,7 @@ import DateProvider from "./Contexts/DateContext";
 import DataProvider from "./Contexts/PreviewDataContext";
 import AddEventProvider from "./Contexts/AddEventContext";
 import LoginProvider from "./Contexts/LoginContext";
+import OptionsProvider from "./Contexts/OptionsContext";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -25,7 +26,9 @@ ReactDOM.render(
             <DateProvider>
               <DataProvider>
                 <AddEventProvider>
-                  <App />
+                  <OptionsProvider>
+                    <App />
+                  </OptionsProvider>
                 </AddEventProvider>
               </DataProvider>
             </DateProvider>

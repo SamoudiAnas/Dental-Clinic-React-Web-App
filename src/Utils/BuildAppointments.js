@@ -31,22 +31,6 @@ const generateEmptyData = (index) => {
   };
 };
 
-export const sortDataByHour = (data) => {
-  let tempData = [];
-
-  let numberOfDataItems = data.length;
-
-  if (numberOfDataItems === 0) {
-    console.log("empty");
-  } else {
-    //take indexes of hours in tempData
-    for (let i = 0; i < numberOfDataItems; i++) {
-      tempData.push(hoursOfWork.indexOf([data[i].hour]));
-    }
-    console.log(tempData);
-  }
-};
-
 export const generateColor = () => {
   const Colors = [
     "#F72C25",
@@ -58,4 +42,25 @@ export const generateColor = () => {
   ];
 
   return Colors[Math.floor(Math.random() * 6)];
+};
+
+/**
+ *
+ * @param {Array} data of the day
+ * @returns arranged data by hours
+ */
+export const arrangeAppointments = (data) => {
+  if (data === undefined || data.length === 0) {
+    return [];
+  }
+  let arrangedArray = [];
+  for (let j = 0; j < 8; j++) {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].index === j) {
+        arrangedArray.push(data[i]);
+      }
+    }
+  }
+  console.log(arrangedArray);
+  return arrangedArray;
 };

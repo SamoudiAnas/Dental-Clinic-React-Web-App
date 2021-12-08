@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDateContext } from "../../../Contexts/DateContext";
 import { useDataContext } from "../../../Contexts/PreviewDataContext";
-import { sortDataByHour } from "../../../Utils/BuildAppointments";
+import { arrangeAppointments } from "../../../Utils/BuildAppointments";
 import NothingFound from "../../Not Found/NothingFound";
 import PatientAppointment from "../../PatientComponents/PatientAppointment";
 
@@ -12,15 +12,18 @@ function DailyView() {
   const { getData } = useDataContext();
 
   useEffect(() => {
-    setData(getData("2021", "December", "09"));
+    setData(arrangeAppointments(getData("2021", "December", "09")));
+
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     setData(
-      getData(date.format("YYYY"), date.format("MMMM"), date.format("DD"))
+      arrangeAppointments(
+        getData(date.format("YYYY"), date.format("MMMM"), date.format("DD"))
+      )
     );
-    sortDataByHour(data);
+
     // eslint-disable-next-line
   }, [date]);
 

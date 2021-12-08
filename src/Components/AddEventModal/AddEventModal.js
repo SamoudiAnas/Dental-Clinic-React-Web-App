@@ -172,6 +172,10 @@ const Wrapper = styled.div`
     align-items: center;
   }
 
+  input:focus {
+    outline-color: ${(props) => props.theme.primary};
+  }
+
   .title {
     text-align: center;
   }

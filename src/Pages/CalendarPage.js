@@ -1,16 +1,27 @@
 import React from "react";
 import styled from "styled-components";
-import AddEventModal from "../Components/AddEventModal/AddEventModal";
+
+//components
+import Layout from "../Components/Layout/Layout";
 import CalendarComponent from "../Components/Calendar/CalendarComponent";
 import Loading from "../Components/Loading/Loading";
+
+//modals
+import AddEventModal from "../Components/AddEventModal/AddEventModal";
+import EditModal from "../Components/Modals/AppointementOptions/EditModal";
+import DeleteModal from "../Components/Modals/AppointementOptions/DeleteModal";
+
+//contexts
 import { useAddEventContext } from "../Contexts/AddEventContext";
 import { useDataContext } from "../Contexts/PreviewDataContext";
-import Layout from "../Components/Layout/Layout";
+import { useOptionsContext } from "../Contexts/OptionsContext";
 
 function CalendarPage() {
   const { isAddEventOpen, setIsAddEventOpen } = useAddEventContext();
   const { database } = useDataContext();
+  const { isEditOpen, isDeleteOpen } = useOptionsContext();
 
+  //refresh page to reload database
   const refreshPage = () => {
     window.location.reload();
   };
@@ -36,8 +47,18 @@ function CalendarPage() {
         <div className="calendar-wrapper">
           <CalendarComponent />
         </div>
+
+        {/* -------- loading database screen -------- */}
         {database.length === 0 ? <Loading /> : null}
+
+        {/* -------- Add Event Modal -------- */}
         {isAddEventOpen ? <AddEventModal /> : null}
+
+        {/* -------- Edit Appointment Modal -------- */}
+        {isEditOpen && <EditModal />}
+
+        {/* -------- Delete Appointment Modal -------- */}
+        {isDeleteOpen && <DeleteModal />}
       </Wrapper>
     </Layout>
   );
@@ -45,7 +66,7 @@ function CalendarPage() {
 
 export default CalendarPage;
 
-export const Wrapper = styled.div`
+const Wrapper = styled.div`
   padding: 2rem;
   color: black;
 
@@ -53,6 +74,7 @@ export const Wrapper = styled.div`
     display: grid;
     grid-template-columns: repeat(8, 1fr);
   }
+
   .day-name {
     padding: 0.75rem;
     color: ${(props) => props.theme.secondary};
