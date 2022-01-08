@@ -1,161 +1,87 @@
-import { month_names } from "../../../Utils/DateVariables";
-import { databaseRef } from "../../../firebase-config";
-import { set, ref } from "firebase/database";
+import { editAppointment } from "../../../helpers/DataHelpers";
 
-export const DragAppointementHandler = (dayData, res) => {
-  let itemSource, itemDestination, tempItem;
-  //item source
-  itemSource = dayData[res.source.index];
-
+export const dragAppointementHandler = (res, data) => {
+  //if the destination is null
   if (res.destination === null) {
     return;
   }
 
-  //item Destination
-  itemDestination = dayData[res.destination.index];
-
-  //save the destination item for later
-  tempItem = itemSource;
-
-  if (itemSource.id.substring(0, 5) === "empty") {
+  //if im dragging on the 9th column
+  if (res.destination.index === 8) {
     return;
   }
 
-  //get the date variables
-  let year = itemSource.date.substring(0, 4);
-  let month = itemSource.date.substring(5, 7);
-  let day = itemSource.date.substring(8, 10);
+  //if im dragging empty appointment
+  if (res.draggableId.substring(0, 5) === "empty") {
+    return;
+  }
 
-  //swap item with empty place
+  //if the element dragged is put in the same place
   if (
-    itemSource.id.substring(0, 5) !== "empty" &&
-    itemDestination.id.substring(0, 5) === "empty"
+    res.source.index === res.destination.index &&
+    res.source.droppableId === res.destination.droppableId
   ) {
-    //change the hour of the source to the hour of the destination
-    //change the hour if the appointment
-    set(
-      ref(
-        databaseRef,
-        "/" +
-          year +
-          "/" +
-          month_names[month - 1] +
-          "/" +
-          day +
-          "/" +
-          itemSource.id +
-          "/hour"
-      ),
-      itemDestination.hour
-    );
+    return;
+  }
 
-    //change the index of the hour if the appointment
-    set(
-      ref(
-        databaseRef,
-        "/" +
-          year +
-          "/" +
-          month_names[month - 1] +
-          "/" +
-          day +
-          "/" +
-          itemSource.id +
-          "/index"
-      ),
-      itemDestination.index
+  let sourceObject;
+  //source
+  for (let i = 0; i < 7; i++) {
+    for (let j = 0; j < 8; j++) {
+      if (data[i][j]._id === res.draggableId) {
+        sourceObject = data[i][j];
+      }
+    }
+  }
+
+  let destinationDate;
+  //date of destination
+  for (let i = 0; i < 7; i++) {
+    for (let j = 0; j < 8; j++) {
+      if (data[i][j]._id === res.destination.droppableId) {
+        destinationDate = data[i][j].date;
+      }
+    }
+  }
+
+  let destinationObject;
+  //find the destination object by date and the index of the hour
+  for (let i = 0; i < 7; i++) {
+    for (let j = 0; j < 8; j++) {
+      if (
+        data[i][j].date === destinationDate &&
+        data[i][j].index === res.destination.index
+      ) {
+        destinationObject = data[i][j];
+      }
+    }
+  }
+
+  if (destinationObject._id.substring(0, 5) === "empty") {
+    editAppointment(
+      sourceObject._id,
+      sourceObject.clientName,
+      sourceObject.phone,
+      destinationObject.date,
+      destinationObject.hour
     );
   }
 
-  //swap between two appointments
-  if (
-    itemSource.id.substring(0, 5) !== "empty" &&
-    itemDestination.id.substring(0, 5) !== "empty"
-  ) {
-    //change the hour of the source to the hour of the destination
-
-    /**
-     *
-     *    =======================
-     *    ===== DESTINATION =====
-     *    =======================
-     *
-     *
-     */
-    //change the hour if the appointment for the destination
-    set(
-      ref(
-        databaseRef,
-        "/" +
-          year +
-          "/" +
-          month_names[month - 1] +
-          "/" +
-          day +
-          "/" +
-          itemDestination.id +
-          "/hour"
-      ),
-      tempItem.hour
+  if (destinationObject._id.substring(0, 5) !== "empty") {
+    editAppointment(
+      sourceObject._id,
+      sourceObject.clientName,
+      sourceObject.phone,
+      destinationObject.date,
+      destinationObject.hour
     );
 
-    //change the index of the hour if the appointment
-    set(
-      ref(
-        databaseRef,
-        "/" +
-          year +
-          "/" +
-          month_names[month - 1] +
-          "/" +
-          day +
-          "/" +
-          itemDestination.id +
-          "/index"
-      ),
-      tempItem.index
-    );
-
-    /**
-     *
-     *    ======================
-     *    ======= SOURCE =======
-     *    ======================
-     *
-     *
-     */
-    //change the hour if the appointment for the source
-    set(
-      ref(
-        databaseRef,
-        "/" +
-          year +
-          "/" +
-          month_names[month - 1] +
-          "/" +
-          day +
-          "/" +
-          itemSource.id +
-          "/hour"
-      ),
-      itemDestination.hour
-    );
-
-    //change the index of the hour if the appointment
-    set(
-      ref(
-        databaseRef,
-        "/" +
-          year +
-          "/" +
-          month_names[month - 1] +
-          "/" +
-          day +
-          "/" +
-          itemSource.id +
-          "/index"
-      ),
-      itemDestination.index
+    editAppointment(
+      destinationObject._id,
+      destinationObject.clientName,
+      destinationObject.phone,
+      sourceObject.date,
+      sourceObject.hour
     );
   }
 };

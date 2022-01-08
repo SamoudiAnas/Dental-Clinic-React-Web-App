@@ -1,12 +1,15 @@
 import { v4 } from "uuid";
 import { hoursOfWork } from "./DateVariables";
 
-export function replaceEmptyAppointments(data) {
-  let tempData = [];
+export function replaceEmptyAppointments(data, date) {
+  if (date === undefined) {
+    return;
+  }
 
+  let tempData = [];
   //generate an array full of empty data
   for (let i = 0; i < 8; i++) {
-    tempData.push(generateEmptyData(i));
+    tempData.push(generateEmptyData(i, date));
   }
 
   //put the reserved data in its place
@@ -21,16 +24,21 @@ export function replaceEmptyAppointments(data) {
   return tempData;
 }
 
-const generateEmptyData = (index) => {
+const generateEmptyData = (index, day) => {
   return {
-    id: "empty " + v4(),
+    _id: "empty " + v4(),
     clientName: "",
-    Date: "",
+    date: day,
     hour: hoursOfWork[index],
+    phone: "",
     index: index,
   };
 };
 
+/**
+ *
+ * @returns {String} a random color HEX
+ */
 export const generateColor = () => {
   const Colors = [
     "#F72C25",
@@ -61,6 +69,6 @@ export const arrangeAppointments = (data) => {
       }
     }
   }
-  console.log(arrangedArray);
+
   return arrangedArray;
 };

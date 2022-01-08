@@ -3,19 +3,15 @@ import React, { useState, useContext, createContext } from "react";
 const SidebarContext = createContext();
 
 function SidebarProvider({ children }) {
-  const initialState = {
-    isSidebarOpen: false,
-  };
-  const [sidebarState, setSidebarState] = useState(initialState);
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+
   const handleSidebar = () => {
-    setSidebarState({
-      ...sidebarState,
-      isSidebarOpen: !sidebarState.isSidebarOpen,
-    });
+    setIsSideBarOpen(!isSideBarOpen);
   };
+
   return (
     <SidebarContext.Provider
-      value={{ sidebarState, setSidebarState, handleSidebar }}
+      value={{ isSideBarOpen, setIsSideBarOpen, handleSidebar }}
     >
       {children}
     </SidebarContext.Provider>

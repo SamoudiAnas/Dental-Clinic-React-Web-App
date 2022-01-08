@@ -3,21 +3,23 @@ import styled from "styled-components";
 import ClickOutHandler from "react-clickout-handler";
 
 //contexts
-import { useDataContext } from "../../../Contexts/PreviewDataContext";
 import { useOptionsContext } from "../../../Contexts/OptionsContext";
-import { useLoginContext } from "../../../Contexts/LoginContext";
-//utils
-import { editAppointment } from "../../../Utils/DatabaseFunctions";
+import { useAppointmentsContext } from "../../../Contexts/AppointmentsContext";
+
+//helpers
+import { editAppointment } from "../../../helpers/DataHelpers";
 
 function EditModal() {
-  const { getData } = useDataContext();
+  const { loadData } = useAppointmentsContext();
   const { selectedPatientToEdit, setIsEditOpen } = useOptionsContext();
-  const { setError } = useLoginContext();
 
   //client name
   const [clientName, setClientName] = useState(
     selectedPatientToEdit.clientName
   );
+
+  //client phone
+  const [phone, setPhone] = useState(selectedPatientToEdit.phone);
 
   //appointment date
   const [date, setDate] = useState(selectedPatientToEdit.date);
@@ -30,16 +32,11 @@ function EditModal() {
     e.preventDefault();
     //we putting edit inside setError method to check...
     //...  if we encounter an error to display it.
-    setError(
-      editAppointment(
-        selectedPatientToEdit.id,
-        clientName,
-        date,
-        selectedPatientToEdit.date,
-        hour,
-        getData
-      )
-    );
+    setIsEditOpen(false);
+    editAppointment(selectedPatientToEdit._id, clientName, phone, date, hour);
+    setTimeout(() => {
+      loadData();
+    }, 300);
   };
 
   return (
@@ -51,11 +48,16 @@ function EditModal() {
             <h3>x</h3>
           </div>
         </div>
-        <form onSubmit={editHandler}>
+        <form>
           <input
             type="text"
             value={clientName}
             onChange={(e) => setClientName(e.target.value)}
+          />
+          <input
+            type="text"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
           <input
             type="date"
@@ -73,7 +75,7 @@ function EditModal() {
             <option value="15:00 - 16:00">15:00 - 16:00</option>
           </select>
 
-          <button type="submit">Edit</button>
+          <button onClick={editHandler}>Edit</button>
         </form>
       </Wrapper>
     </ClickOutHandler>

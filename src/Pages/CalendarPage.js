@@ -13,16 +13,17 @@ import DeleteModal from "../Components/Modals/AppointementOptions/DeleteModal";
 
 //contexts
 import { useAddEventContext } from "../Contexts/AddEventContext";
-import { useDataContext } from "../Contexts/PreviewDataContext";
 import { useOptionsContext } from "../Contexts/OptionsContext";
+import { useAppointmentsContext } from "../Contexts/AppointmentsContext";
 
 function CalendarPage() {
   const { isAddEventOpen, setIsAddEventOpen } = useAddEventContext();
-  const { database } = useDataContext();
   const { isEditOpen, isDeleteOpen } = useOptionsContext();
+  const { loadData, isLoading } = useAppointmentsContext();
 
   //refresh page to reload database
   const refreshPage = () => {
+    loadData();
     window.location.reload();
   };
 
@@ -49,7 +50,7 @@ function CalendarPage() {
         </div>
 
         {/* -------- loading database screen -------- */}
-        {database.length === 0 ? <Loading /> : null}
+        {isLoading ? <Loading /> : null}
 
         {/* -------- Add Event Modal -------- */}
         {isAddEventOpen ? <AddEventModal /> : null}

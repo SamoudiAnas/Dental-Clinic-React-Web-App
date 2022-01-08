@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import { useLoginContext } from "../../Contexts/LoginContext";
+import { useAuthContext } from "../../Contexts/AuthContext";
 import errorImg from "../../Images/error.svg";
 
 function ErrorModal() {
-  const { error } = useLoginContext();
+  const { error } = useAuthContext();
   return (
     <Wrapper error={error ? "3rem" : "-50rem"}>
       <img src={errorImg} alt="" />
-      <h4>{error.message}</h4>
+      <h4>{error?.message}</h4>
     </Wrapper>
   );
 }

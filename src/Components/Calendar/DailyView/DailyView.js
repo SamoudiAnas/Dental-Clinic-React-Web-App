@@ -1,43 +1,42 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+
+//contexts
 import { useDateContext } from "../../../Contexts/DateContext";
-import { useDataContext } from "../../../Contexts/PreviewDataContext";
-import { arrangeAppointments } from "../../../Utils/BuildAppointments";
+import { useAppointmentsContext } from "../../../Contexts/AppointmentsContext";
+
+//components
 import NothingFound from "../../Not Found/NothingFound";
 import PatientAppointment from "../../PatientComponents/PatientAppointment";
 
 function DailyView() {
-  const [data, setData] = useState([]);
   const { date } = useDateContext();
-  const { getData } = useDataContext();
+  const { appointments, getAppointmentsByDate } = useAppointmentsContext();
+  const [dailyAppointments, setDailyAppointments] = useState([]);
 
   useEffect(() => {
-    setData(arrangeAppointments(getData("2021", "December", "09")));
-
-    // eslint-disable-next-line
+    setDailyAppointments(getAppointmentsByDate(date));
+    //eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    setData(
-      arrangeAppointments(
-        getData(date.format("YYYY"), date.format("MMMM"), date.format("DD"))
-      )
-    );
-
-    // eslint-disable-next-line
-  }, [date]);
+    setDailyAppointments(getAppointmentsByDate(date));
+    //eslint-disable-next-line
+  }, [date, appointments]);
 
   return (
     <Wrapper>
-      {data.length !== 0 ? (
+      {dailyAppointments.length !== 0 ? (
         <div>
           <div className="clients_container">
             <h4>Client Name</h4>
-            <h5> Appointment Hour</h5>
-            <h4>Day</h4>
+            <h4> Appointment Hour</h4>
+            <h4>Phone Number</h4>
+            <h4>Edit</h4>
+            <h4>Delete</h4>
           </div>
-          {data.map((item) => (
-            <PatientAppointment key={item.id} dayData={item} />
+          {dailyAppointments.map((item) => (
+            <PatientAppointment key={item._id} dayData={item} />
           ))}
         </div>
       ) : (
@@ -53,9 +52,10 @@ const Wrapper = styled.div`
   padding-top: 2rem;
   .clients_container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 4fr 4fr 4fr 1fr 1fr;
     align-items: center;
     padding: 1rem;
+    color: #313131;
     background-color: #eee;
   }
 `;

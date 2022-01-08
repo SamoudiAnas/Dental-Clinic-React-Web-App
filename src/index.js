@@ -12,29 +12,29 @@ import { ThemeProvider } from "styled-components";
 import SidebarProvider from "./Contexts/SidebarContext";
 import CalendarViewProvider from "./Contexts/CalendarViewContext";
 import DateProvider from "./Contexts/DateContext";
-import DataProvider from "./Contexts/PreviewDataContext";
 import AddEventProvider from "./Contexts/AddEventContext";
-import LoginProvider from "./Contexts/LoginContext";
 import OptionsProvider from "./Contexts/OptionsContext";
+import AuthProvider from "./Contexts/AuthContext";
+import AppointmentsProvider from "./Contexts/AppointmentsContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={Dark}>
-      <LoginProvider>
-        <SidebarProvider>
-          <CalendarViewProvider>
-            <DateProvider>
-              <DataProvider>
+      <AuthProvider>
+        <AppointmentsProvider>
+          <SidebarProvider>
+            <CalendarViewProvider>
+              <DateProvider>
                 <AddEventProvider>
                   <OptionsProvider>
                     <App />
                   </OptionsProvider>
                 </AddEventProvider>
-              </DataProvider>
-            </DateProvider>
-          </CalendarViewProvider>
-        </SidebarProvider>
-      </LoginProvider>
+              </DateProvider>
+            </CalendarViewProvider>
+          </SidebarProvider>
+        </AppointmentsProvider>
+      </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")

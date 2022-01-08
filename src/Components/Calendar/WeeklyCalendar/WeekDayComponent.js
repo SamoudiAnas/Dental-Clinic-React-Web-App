@@ -12,8 +12,13 @@ function WeekDayComponent({ item }) {
 
   //handlers
   const edit = () => {
-    setSelectedPatientToEdit(item);
+    setSelectedPatientToEdit({ ...item });
     setIsEditOpen(true);
+  };
+
+  const deleteHandler = () => {
+    setSelectedPatientToEdit({ ...item });
+    setIsDeleteOpen(true);
   };
 
   return (
@@ -28,7 +33,7 @@ function WeekDayComponent({ item }) {
             <p className="option" onClick={edit}>
               Edit
             </p>
-            <p className="option" onClick={() => setIsDeleteOpen(true)}>
+            <p className="option" onClick={deleteHandler}>
               Delete
             </p>
           </div>
@@ -71,7 +76,7 @@ const Wrapper = styled.div`
     margin-bottom: 0.5rem;
     transition: all 0.3s ease-in;
     &:hover {
-      background: rgb(247, 44, 37, 0.8);
+      background: rgb(97, 83, 204, 0.8);
     }
   }
 

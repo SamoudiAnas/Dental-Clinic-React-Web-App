@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { generateColor } from "../../../../Utils/BuildAppointments";
-import { DragAppointementHandler } from "../WeeklyCalendarBuild";
+import { dragAppointementHandler } from "../WeeklyCalendarBuild";
 import WeekDayComponent from "../WeekDayComponent";
 
 function DayTab({ dayData }) {
@@ -59,7 +59,7 @@ function DayTab({ dayData }) {
   return (
     <Wrapper>
       <DragDropContext
-        onDragEnd={(res) => DragAppointementHandler(dayData, res)}
+        onDragEnd={(res) => dragAppointementHandler(dayData, res)}
       >
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
@@ -69,14 +69,14 @@ function DayTab({ dayData }) {
               style={getListStyle(snapshot.isDraggingOver)}
             >
               {dayData.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
+                <Draggable key={item._id} draggableId={item._id} index={index}>
                   {(provided, snapshot) => (
                     <div
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       style={
-                        item.id.substring(0, 5) === "empty"
+                        item._id.substring(0, 5) === "empty"
                           ? getItemStyleForEmpty(
                               snapshot.isDragging,
                               provided.draggableProps.style
@@ -87,7 +87,7 @@ function DayTab({ dayData }) {
                             )
                       }
                     >
-                      {item.id.substring(0, 5) === "empty" ? (
+                      {item?._id.substring(0, 5) === "empty" ? (
                         item.clientName
                       ) : (
                         <WeekDayComponent item={item} />

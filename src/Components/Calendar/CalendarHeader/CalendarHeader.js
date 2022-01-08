@@ -1,12 +1,14 @@
 import React from "react";
 import moment from "moment";
 import styled from "styled-components";
-import CalendarViewMode from "./CalendarViewMode";
-import MonthController from "./Controllers/MonthController";
 
 //contexts
 import { useCalendarViewContext } from "../../../Contexts/CalendarViewContext";
 import { useDateContext } from "../../../Contexts/DateContext";
+
+//components
+import CalendarViewMode from "./CalendarViewMode";
+import MonthController from "./Controllers/MonthController";
 import WeekController from "./Controllers/WeekController";
 import DayController from "./Controllers/DayController";
 

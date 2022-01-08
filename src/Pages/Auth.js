@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import ErrorModal from "../Components/Modals/ErrorModal";
-import { useLoginContext } from "../Contexts/LoginContext";
+import { useAuthContext } from "../Contexts/AuthContext";
 import loginImg from "../Images/login.svg";
 
 function Auth() {
@@ -10,7 +10,7 @@ function Auth() {
   const password = useRef(null);
   const history = useHistory();
 
-  const { login, setIsLoggedIn } = useLoginContext();
+  const { login } = useAuthContext();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -18,9 +18,12 @@ function Auth() {
     if (email.current.value && password.current.value) {
       try {
         await login(email.current.value, password.current.value);
-        setIsLoggedIn(true);
+
+        //go to dashboard
         history.push("/");
-      } catch {}
+      } catch (err) {
+        throw err;
+      }
     }
   };
 
@@ -51,7 +54,7 @@ function Auth() {
                 <input type="checkbox" id="rememberMe" />
                 <label htmlFor="rememberMe"> Remember me?</label>
               </div>
-              <a href="/password-reset">forgot password?</a>
+              <Link to="/password-reset">forgot password?</Link>
             </div>
             <button onClick={handleLogin}>Login</button>
           </form>

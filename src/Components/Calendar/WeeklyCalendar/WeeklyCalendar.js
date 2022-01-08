@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { v4 } from "uuid";
 import { useDateContext } from "../../../Contexts/DateContext";
 import texture from "../../../Images/texture.svg";
-//import { previewData } from "../../../Utils/PreviewData";
 import { hoursOfWork } from "../../../Utils/DateVariables";
 import WeekData from "./WeekData/WeekData";
 
@@ -20,18 +19,20 @@ function WeeklyCalendar() {
 
   return (
     <Wrapper>
-      <div className="day-names">
+      <div className="days_container">
         <div className="empty-tab"></div>
-        {tempArray.map((day_name) => (
-          <div key={v4()} className="day-name-abv">
-            {day_name.format("dddd")}
-            <br />
-            <span className="day-date">{day_name.format("DD")}</span>
-          </div>
-        ))}
+        <div className="day-names">
+          {tempArray.map((day_name) => (
+            <div key={v4()} className="day-name-abv">
+              {day_name.format("dddd")}
+              <br />
+              <span className="day-date">{day_name.format("DD")}</span>
+            </div>
+          ))}
+        </div>
       </div>
       <div className="info">
-        <div>
+        <div className="hours">
           {hoursOfWork.map((hour) => (
             <div key={v4()} className="hour">
               {hour}
@@ -39,9 +40,7 @@ function WeeklyCalendar() {
           ))}
         </div>
 
-        {tempArray.map((day) => (
-          <WeekData key={v4()} date={day} />
-        ))}
+        <WeekData />
       </div>
     </Wrapper>
   );
@@ -51,6 +50,9 @@ export default WeeklyCalendar;
 
 export const Wrapper = styled.div`
   .empty-tab {
+    min-width: 10rem !important;
+    max-width: 10rem !important;
+    height: 5rem;
     background-image: url(${texture});
     background-repeat: no-repeat;
     background-size: 100%;
@@ -59,12 +61,21 @@ export const Wrapper = styled.div`
     border-bottom: 1px solid #ddd;
   }
 
-  .day-names,
-  .info {
+  .days_container {
+    display: flex;
+  }
+  .day-names {
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+  .info {
+    display: flex;
   }
 
+  .hours {
+    width: 11rem;
+  }
   .day-name-abv,
   .hour {
     border-right: 1px solid #ddd;
@@ -76,6 +87,8 @@ export const Wrapper = styled.div`
 
   .hour {
     height: 5rem;
+    min-width: 10rem !important;
+    max-width: 10rem !important;
   }
 
   .tab {

@@ -22,6 +22,7 @@ const Wrapper = styled.div`
   top: 0;
   left: 0;
   background: rgba(48, 41, 47, 0.99);
+  z-index: 999;
 
   .container {
     background-color: white;

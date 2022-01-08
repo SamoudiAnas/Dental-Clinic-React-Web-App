@@ -5,10 +5,11 @@ import { ReactComponent as ReactLogo } from "../../Images/logo.svg";
 import { NavElements } from "../../Utils/NavElements";
 import NavElement from "./NavElement";
 function Sidebar() {
-  const { sidebarState, handleSidebar } = useSidebarContext();
+  const { isSideBarOpen, setIsSideBarOpen, handleSidebar } =
+    useSidebarContext();
 
   return (
-    <Wrapper isSidebarOpen={sidebarState.isSidebarOpen}>
+    <Wrapper isopen={isSideBarOpen}>
       <div className="logo-container">
         <ReactLogo className="logo" />
         <h3>The Dental</h3>
@@ -20,7 +21,7 @@ function Sidebar() {
       </div>
 
       <div className="bottom" onClick={handleSidebar}>
-        <span>{sidebarState.isSidebarOpen ? "<" : ">"}</span>
+        <span>{isSideBarOpen ? "<" : ">"}</span>
       </div>
     </Wrapper>
   );
@@ -29,7 +30,7 @@ function Sidebar() {
 export const Wrapper = styled.div`
   padding: 0;
   margin: 0;
-  width: ${(props) => (props.isSidebarOpen ? "250px" : "4rem")};
+  width: ${(props) => (props.isopen ? "250px" : "4rem")};
   min-height: 100vh;
   background-color: ${(props) => props.theme.secondary};
   overflow: hidden;
@@ -45,7 +46,7 @@ export const Wrapper = styled.div`
 
     h3 {
       color: white;
-      display: ${(props) => (props.isSidebarOpen ? "block" : "none")};
+      display: ${(props) => (props.isopen ? "block" : "none")};
     }
   }
 
