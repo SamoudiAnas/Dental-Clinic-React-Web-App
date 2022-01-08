@@ -2,14 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import Layout from "../Components/Layout/Layout";
 import { useHistory } from "react-router-dom";
+import { useAuthContext } from "../Contexts/AuthContext";
 
 function Settings() {
   const history = useHistory();
-
+  const { setIsLoggedIn } = useAuthContext();
   const logoutHandler = async () => {
-    try {
-      history.push("/login");
-    } catch {}
+    setIsLoggedIn(false);
+    history.push("/login");
   };
 
   return (

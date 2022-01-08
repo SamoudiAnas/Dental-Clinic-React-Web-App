@@ -3,11 +3,11 @@ import { ReactComponent as Message } from "../Images/message.svg";
 import { ReactComponent as Dashboard } from "../Images/dashboard.svg";
 import { ReactComponent as Settings } from "../Images/settings.svg";
 export const NavElements = [
-  {
+  /*{
     name: "Dashboard",
     path: "/",
     icon: <Dashboard className="nav-icon" />,
-  },
+  },*/
   {
     name: "Calendar",
     path: "/calendar",
