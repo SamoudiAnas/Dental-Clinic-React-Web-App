@@ -15,22 +15,22 @@ function App() {
   return (
     <Router>
       <Switch>
-        <PrivateRoute exact path="/">
+        <PrivateRoute exact path="/TheDental/admin">
           <Overview />
         </PrivateRoute>
 
-        <PrivateRoute exact path="/calendar">
+        <PrivateRoute exact path="/TheDental/admin/calendar">
           <CalendarPage />
         </PrivateRoute>
 
-        <PrivateRoute exact path="/messages">
+        <PrivateRoute exact path="/TheDental/admin/messages">
           <Messages />
         </PrivateRoute>
 
-        <PrivateRoute exact path="/settings">
+        <PrivateRoute exact path="/TheDental/admin/settings">
           <Settings />
         </PrivateRoute>
-        <Route exact path="/login">
+        <Route exact path="/TheDental/admin/login">
           <Auth />
         </Route>
       </Switch>

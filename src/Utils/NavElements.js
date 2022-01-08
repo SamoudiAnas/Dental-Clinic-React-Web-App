@@ -11,17 +11,17 @@ export const NavElements = [
   },*/
   {
     name: "Calendar",
-    path: "/calendar",
+    path: "/TheDental/admin/calendar",
     icon: <Calendar className="nav-icon" />,
   },
   {
     name: "Messages",
-    path: "/messages",
+    path: "/TheDental/admin/messages",
     icon: <Message className="nav-icon" />,
   },
   {
     name: "Settings",
-    path: "/settings",
+    path: "/TheDental/admin/settings",
     icon: <Settings className="nav-icon" />,
   },
 ];

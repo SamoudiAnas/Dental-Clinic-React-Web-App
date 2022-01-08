@@ -20,7 +20,7 @@ function Auth() {
       await login(email, password);
 
       //go to dashboard
-      history.push("/calendar");
+      history.push("/TheDental/admin/calendar");
     } catch (err) {
       throw err;
     }

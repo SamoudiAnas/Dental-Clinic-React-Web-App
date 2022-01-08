@@ -9,14 +9,16 @@ const PrivateRoute = ({ children, ...rest }) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      history.push("/");
+      history.push("/TheDental/admin/calendar");
     }
   }, []);
 
   return (
     <Route
       {...rest}
-      render={() => (isLoggedIn ? children : <Redirect to="/login" />)}
+      render={() =>
+        isLoggedIn ? children : <Redirect to="/TheDental/admin/login" />
+      }
     ></Route>
   );
 };
