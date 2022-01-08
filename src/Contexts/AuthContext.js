@@ -1,54 +1,29 @@
 import React, { useState, useContext, createContext } from "react";
+import { loginHandler } from "../helpers/AuthHelpers";
 
 const AuthContext = createContext();
 
 function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, seterror] = useState(null);
-  const [user, setUser] = useState(null);
 
   //login handler
-  const login = (email, password) => {
-    if (email.trim().length === 0 || password.trim().length === 0) {
+  const login = async (email, password) => {
+    let result = await loginHandler(email, password);
+
+    //if there was some error
+    if (result === null || undefined) {
+      seterror("Can't log in please try again!");
       return;
     }
 
-    let requestBody = {
-      query: `
-        query {
-          login(email: "${email}", password: "${password}") {
-            userId
-            token
-            tokenExpiration
-          }
-        }
-      `,
-    };
+    //if the logged in user is not an admin
+    if (!result.data.data.login.isAdmin) {
+      seterror("Access Denied!");
+      return;
+    }
 
-    fetch("http://localhost:8000/graphql", {
-      method: "POST",
-      body: JSON.stringify(requestBody),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        if (res.status !== 200 && res.status !== 201) {
-          throw new Error("Failed!");
-        }
-        return res.json();
-      })
-      .then((resData) => {
-        if (!resData.data.login.isAdmin) {
-          throw new Error("Access refused!");
-        }
-        setUser({ ...resData.data.login });
-        localStorage.setItem("token", user.token);
-        setIsLoggedIn(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setIsLoggedIn(true);
   };
 
   return (
@@ -56,8 +31,6 @@ function AuthProvider({ children }) {
       value={{
         isLoggedIn,
         setIsLoggedIn,
-        user,
-        setUser,
         login,
         error,
         seterror,

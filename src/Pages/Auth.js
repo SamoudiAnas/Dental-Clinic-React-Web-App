@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import ErrorModal from "../Components/Modals/ErrorModal";
@@ -6,8 +6,9 @@ import { useAuthContext } from "../Contexts/AuthContext";
 import loginImg from "../Images/login.svg";
 
 function Auth() {
-  const email = useRef(null);
-  const password = useRef(null);
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+
   const history = useHistory();
 
   const { login } = useAuthContext();
@@ -15,15 +16,13 @@ function Auth() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (email.current.value && password.current.value) {
-      try {
-        await login(email.current.value, password.current.value);
+    try {
+      await login(email, password);
 
-        //go to dashboard
-        history.push("/");
-      } catch (err) {
-        throw err;
-      }
+      //go to dashboard
+      history.push("/");
+    } catch (err) {
+      throw err;
     }
   };
 
@@ -41,20 +40,19 @@ function Auth() {
               className="credentials"
               type="email"
               placeholder="Enter your email"
-              ref={email}
+              onChange={(e) => setemail(e.target.value)}
             />
             <input
               className="credentials"
               type="password"
               placeholder="Enter your password"
-              ref={password}
+              onChange={(e) => setpassword(e.target.value)}
             />
             <div className="flex">
               <div className="remember">
                 <input type="checkbox" id="rememberMe" />
                 <label htmlFor="rememberMe"> Remember me?</label>
               </div>
-              <Link to="/password-reset">forgot password?</Link>
             </div>
             <button onClick={handleLogin}>Login</button>
           </form>

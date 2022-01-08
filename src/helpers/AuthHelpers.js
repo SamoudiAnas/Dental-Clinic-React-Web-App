@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL = "https://samoudianas.xyz/node_api/graphql";
 
-export const login = async (email, password) => {
+export const loginHandler = async (email, password) => {
   if (email.trim().length === 0 || password.trim().length === 0) {
     return;
   }
@@ -17,11 +17,16 @@ export const login = async (email, password) => {
             userId
             token
             tokenExpiration
+            isAdmin
           }
         }
       `,
       },
-      { headers: "Content-Type : application/json" }
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
 
     if (result.status === 200) {
