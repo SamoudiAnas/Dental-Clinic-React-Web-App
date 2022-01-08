@@ -5,6 +5,7 @@ import ClickOutHandler from "react-clickout-handler";
 //contexts
 import { useAddEventContext } from "../../Contexts/AddEventContext";
 import { useAppointmentsContext } from "../../Contexts/AppointmentsContext";
+import { useAuthContext } from "../../Contexts/AuthContext";
 
 //helpers
 import { newAppointment } from "../../helpers/DataHelpers";
@@ -13,6 +14,7 @@ function AddEventModal() {
   //contexts
   const { setIsAddEventOpen } = useAddEventContext();
   const { loadData } = useAppointmentsContext();
+  const { token } = useAuthContext();
 
   //input data
   const [clientName, setClientName] = useState("");
@@ -25,7 +27,7 @@ function AddEventModal() {
     //prevent page reload
     e.preventDefault();
 
-    newAppointment(clientName, phone, date, hour);
+    newAppointment(clientName, phone, date, hour, token);
 
     setTimeout(() => {
       loadData();

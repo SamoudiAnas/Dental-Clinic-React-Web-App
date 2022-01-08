@@ -2,6 +2,7 @@ import { ReactComponent as Calendar } from "../Images/calendar.svg";
 import { ReactComponent as Message } from "../Images/message.svg";
 import { ReactComponent as Dashboard } from "../Images/dashboard.svg";
 import { ReactComponent as Settings } from "../Images/settings.svg";
+
 export const NavElements = [
   /*{
     name: "Dashboard",

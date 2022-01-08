@@ -5,6 +5,7 @@ const AuthContext = createContext();
 
 function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState("");
   const [error, seterror] = useState(null);
 
   //login handler
@@ -23,6 +24,7 @@ function AuthProvider({ children }) {
       return;
     }
 
+    setToken(result.data.data.login.token);
     setIsLoggedIn(true);
   };
 
@@ -32,6 +34,7 @@ function AuthProvider({ children }) {
         isLoggedIn,
         setIsLoggedIn,
         login,
+        token,
         error,
         seterror,
       }}

@@ -65,7 +65,7 @@ export const getDataByDate = async (date, setData) => {
     });
 };
 
-export const newAppointment = (clientName, phone, date, hour) => {
+export const newAppointment = (clientName, phone, date, hour, token) => {
   axios.post(
     API_URL,
     {
@@ -88,6 +88,7 @@ export const newAppointment = (clientName, phone, date, hour) => {
     {
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
       },
     }
   );
