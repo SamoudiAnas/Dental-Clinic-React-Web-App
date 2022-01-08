@@ -20,7 +20,7 @@ function Auth() {
       await login(email, password);
 
       //go to dashboard
-      history.push("/");
+      history.push("/calendar");
     } catch (err) {
       throw err;
     }

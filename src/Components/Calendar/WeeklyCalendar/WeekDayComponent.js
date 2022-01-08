@@ -24,7 +24,7 @@ function WeekDayComponent({ item }) {
   return (
     <Wrapper>
       {item.clientName}
-
+      <div className="phone">{item.phone}</div>
       <Options className="options" onClick={() => setIsOpen(!isOpen)} />
 
       {isOpen && (
@@ -82,5 +82,12 @@ const Wrapper = styled.div`
 
   .option:nth-child(3) {
     margin-bottom: 0;
+  }
+
+  .phone {
+    background-color: #eee;
+    color: #5d5d5d;
+    padding: 0.15rem;
+    font-size: 0.8rem;
   }
 `;
