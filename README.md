@@ -4,5 +4,5 @@ This is a web app for dental clinic that simplifies saving and managing patients
 
 ## Calendar Overview
 
-https://samoudianas.xyz/TheDental/videos/TheDentaladmin/DragAppo-1.m4v
+![alt text](https://samoudianas.xyz/TheDental/videos/TheDentaladmin/DragAppo-1.m4v)
 
