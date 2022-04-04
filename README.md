@@ -1,9 +1,10 @@
 # React Dental Clinic Web App
 
-This is a web app for dental clinic that simplifies saving and managing patients appointments.
+This is a web app for dental clinic that simplifies saving and managing patients appointments.\
 Live preview on: https://samoudianas.xyz/TheDental/admin/login
-For demo please use the following credentials:
-email: unlimiteddez@gmail.com
+
+### For demo please use the following credentials:
+email: unlimiteddez@gmail.com \
 password: anas1234
 
 ## Calendar Overview
